@@ -8,6 +8,12 @@ public class AddScore : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         GameManager.Instance.UpdateScore();
+        PointSound();
+    }
+
+    public void PointSound()
+    {
+        AudioManager.Instance.PlayButton();
     }
     
 }

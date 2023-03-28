@@ -52,6 +52,6 @@ public class PipeSpawner : MonoBehaviour
     {
         GameObject newCoin = Instantiate(prefabCoin);
         newCoin.transform.position = transform.position + new Vector3(0, Random.Range(-height, height), 0);
-        Destroy(newCoin,3f);
+        Destroy(newCoin,3.5f);
     }
 }

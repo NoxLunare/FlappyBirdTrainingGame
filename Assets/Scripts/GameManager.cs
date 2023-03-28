@@ -6,15 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public GameObject menuUI, loseUI;
+    public GameObject loseUI;
     public PipeSpawner pipeSpawner;
     public PlayerController playerController;
     public int points = 0;
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreText, bestScoreText;
+    public int bestScore;
+    public string score;
+
+    private void Start() 
+    {
+        bestScore = PlayerPrefs.GetInt(score);
+    }
 
     public void StartGame()
     {
-        menuUI.SetActive(false);
         pipeSpawner.enabled = true;
         playerController.enabled = true;
         playerController.rb.simulated = true;
@@ -28,12 +34,19 @@ public class GameManager : Singleton<GameManager>
     public void RepeatGame()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Game");
     }
     public void OnGameOver()
     {
         ShowLoseUI();
         Time.timeScale = 0;
+        if(points>bestScore)
+        {
+            bestScore=points;
+            PlayerPrefs.SetInt(score,points);
+            PlayerPrefs.Save();
+        }
+        bestScoreText.text = bestScore.ToString();
     }
 
     public void UpdateScore()
